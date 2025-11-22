@@ -10,7 +10,8 @@ import (
 	"github.com/xivapi/godestone/v2"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+// Handler is the entry point for Vercel serverless
+func Handler(w http.ResponseWriter, r *http.Request) {
 	idParam := r.URL.Query().Get("id")
 	if idParam == "" {
 		http.Error(w, "Missing id parameter", http.StatusBadRequest)
@@ -35,10 +36,4 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	jsonData, _ := json.MarshalIndent(c, "", "  ")
 	w.Write(jsonData)
-}
-
-func main() {
-	http.HandleFunc("/", handler)
-	log.Println("Server started on :3000")
-	log.Fatal(http.ListenAndServe(":3000", nil))
 }
