@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
 	"github.com/karashiiro/bingode"
 	"github.com/xivapi/godestone/v2"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	// hardcoded ID for your character
+	// Hardcoded character ID for your account
 	charID := uint32(28293967)
 
 	s := godestone.NewScraper(bingode.New(), godestone.EN)
