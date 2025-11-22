@@ -10,6 +10,18 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	// --- CORS ---
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	// Preflight request
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+	// -------------
+
 	id := uint32(28293967)
 
 	s := godestone.NewScraper(bingode.New(), godestone.EN)
