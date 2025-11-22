@@ -1,0 +1,9 @@
+# Go
+bin/
+*.exe
+*.log
+*.test
+vendor/
+
+# Vercel
+.vercel/
