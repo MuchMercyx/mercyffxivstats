@@ -10,10 +10,10 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	s := godestone.NewScraper(bingode.New(), godestone.EN)
-	charID := uint32(28293967)
+	id := uint32(28293967)
 
-	c, err := s.FetchCharacter(charID)
+	s := godestone.NewScraper(bingode.New(), godestone.EN)
+	c, err := s.FetchCharacter(id)
 	if err != nil {
 		http.Error(w, "Error fetching character", http.StatusInternalServerError)
 		log.Println("FetchCharacter error:", err)
