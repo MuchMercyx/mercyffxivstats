@@ -7,3 +7,4 @@ vendor/
 
 # Vercel
 .vercel/
+.vercel
