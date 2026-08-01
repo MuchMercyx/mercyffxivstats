@@ -22,7 +22,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	id := 28293967
 
 	resp, err := http.Get(
-		"http://localhost:8080/Character/" + strconv.Itoa(id) + "?data=CJ",
+		"https://mercyffxivstats.vercel.app/Character/" + strconv.Itoa(id) + "?data=CJ",
 	)
 	if err != nil {
 		http.Error(w, "Error contacting Nodestone", http.StatusInternalServerError)
