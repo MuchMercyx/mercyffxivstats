@@ -1,12 +1,10 @@
 package handler
 
 import (
-	"encoding/json"
+	"io"
 	"log"
 	"net/http"
-
-	"github.com/karashiiro/bingode"
-	"github.com/xivapi/godestone/v2"
+	"strconv"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -21,18 +19,25 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// --------------
+	id := 28293967
 
-	id := uint32(28293967)
-
-	s := godestone.NewScraper(bingode.New(), godestone.EN)
-	c, err := s.FetchCharacter(id)
+	resp, err := http.Get(
+		"http://localhost:8080/Character/" + strconv.Itoa(id) + "?data=CJ",
+	)
 	if err != nil {
-		http.Error(w, "Error fetching character", http.StatusInternalServerError)
-		log.Println("FetchCharacter error:", err)
+		http.Error(w, "Error contacting Nodestone", http.StatusInternalServerError)
+		log.Println("Nodestone error:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	jsonData, err := io.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Error reading Nodestone response", http.StatusInternalServerError)
+		log.Println("Read error:", err)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	jsonData, _ := json.MarshalIndent(c, "", "  ")
 	w.Write(jsonData)
 }
